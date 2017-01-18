@@ -8,11 +8,17 @@ window.TodoItem = Backbone.Model.extend({
 });
 window.TodoItems = Backbone.Collection.extend({
   model: TodoItem,
+  initialize: function(){
+    this.on('destroy', this.removeElement, this);
+  },
   filterCompleted: function() {
     this.remove(this.filter(function(item) {
       //return items where completed is `true`
       return item.get('completed');
     }))
+  },
+  removeElement: function(model) {
+    this.remove(model);
   }
 });
 
@@ -25,13 +31,17 @@ window.TodoView = Backbone.View.extend({
   },
   events: {
     'change input[type=checkbox]': 'toggle',
-    'change .form-control' : 'update'
+    'change .form-control' : 'update',
+    'click .btn-danger' : 'remove'
   },
   toggle: function() {
     this.model.toggle();
   },
   update: function() {
     this.model.updateText(this.$('.form-control').val());
+  },
+  remove: function(){
+    this.model.destroy();
   },
 
   className: 'input-group input-group-lg',
