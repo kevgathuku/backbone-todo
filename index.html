@@ -5,12 +5,45 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Backbone App</title>
 </head>
 
 <body>
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">bb-todo</a>
+      <a class="navbar-right navbar-img" href="#"><img src="img/backbone.png" alt=""></a>
+    </div>
+  </div>
+
+  <section>
     <h1>Backbone App</h1>
+    <div class="outer-container">
+
+      <div class="add-todo-group input-group input-group-lg">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-list-alt"></i>
+        </span>
+        <input id="newTodo" placeholder="New Todo" class="form-control" type="text">
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="button">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+        </span>
+      </div>
+
+      <div id="app"><!-- Todo list goes here --></div>
+
+      <div class="btn-clear-group">
+        <button class="btn btn-primary btn-clear">Clear Completed</button>
+      </div>
+    </div>
+  </section>
+
+
     <script src="bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
     <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
     <script src="bower_components/backbone/backbone.js" charset="utf-8"></script>
