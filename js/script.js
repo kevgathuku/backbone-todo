@@ -1,4 +1,8 @@
-window.TodoItem = Backbone.Model.extend({});
+window.TodoItem = Backbone.Model.extend({
+  toggle: function() {
+    this.set('completed', !this.get('completed'));
+  }
+});
 window.TodoItems = Backbone.Collection.extend({
   model: TodoItem,
   filterCompleted: function() {
@@ -10,6 +14,18 @@ window.TodoItems = Backbone.Collection.extend({
 });
 
 window.TodoView = Backbone.View.extend({
+  initialize: function() {
+    // Previous way of achieving the same
+    // this.model.on('change', this.render, this);
+    // Listen to changes in model and re-render
+    this.listenTo(this.model, 'change', this.render);
+  },
+  events: {
+    'change input[type=checkbox]': 'toggle'
+  },
+  toggle: function() {
+    this.model.toggle();
+  },
   className: 'input-group input-group-lg',
   template: _.template($('#todo-item-template').html()),
   render: function() {
