@@ -16,6 +16,15 @@
     <script src="bower_components/backbone/backbone.js" charset="utf-8"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
     <script src="js/script.js" charset="utf-8"></script>
+    <script type="text/template" id="todo-item-template">
+      <span class="input-group-addon">
+        <input <%= completed ? "checked=checked" : "" %> type="checkbox">
+      </span>
+      <input value="<%= val %>" class="form-control<%= completed ? " finished " : " " %>" type="text">
+      <span class="input-group-btn">
+        <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+      </span>
+  </script>
 </body>
 
 </html>
