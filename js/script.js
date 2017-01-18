@@ -6,9 +6,10 @@ window.TodoItem = Backbone.Model.extend({
     this.set('val', text);
   }
 });
+
 window.TodoItems = Backbone.Collection.extend({
   model: TodoItem,
-  initialize: function(){
+  initialize: function() {
     this.on('destroy', this.removeElement, this);
   },
   filterCompleted: function() {
@@ -31,8 +32,8 @@ window.TodoView = Backbone.View.extend({
   },
   events: {
     'change input[type=checkbox]': 'toggle',
-    'change .form-control' : 'update',
-    'click .btn-danger' : 'remove'
+    'change .form-control': 'update',
+    'click .btn-danger': 'remove'
   },
   toggle: function() {
     this.model.toggle();
@@ -40,7 +41,7 @@ window.TodoView = Backbone.View.extend({
   update: function() {
     this.model.updateText(this.$('.form-control').val());
   },
-  remove: function(){
+  remove: function() {
     this.model.destroy();
   },
 
@@ -103,6 +104,18 @@ var TodoApp = new(Backbone.Router.extend({
       });
       // Reset the todo input field
       $('#newTodo').val('');
+    });
+
+    $('#newTodo').on('keyup', function(e) {
+      if (e.keyCode == 13) {
+        // If the `Enter` button is pressed
+        window.TodoApp.todoItems.add({
+          val: e.target.value,
+          completed: false
+        });
+        // Reset the todo input field
+        $('#newTodo').val('');
+      }
     });
   },
 
