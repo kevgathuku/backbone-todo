@@ -1,6 +1,9 @@
 window.TodoItem = Backbone.Model.extend({
   toggle: function() {
     this.set('completed', !this.get('completed'));
+  },
+  updateText: function(text) {
+    this.set('val', text);
   }
 });
 window.TodoItems = Backbone.Collection.extend({
@@ -21,11 +24,16 @@ window.TodoView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
   },
   events: {
-    'change input[type=checkbox]': 'toggle'
+    'change input[type=checkbox]': 'toggle',
+    'change .form-control' : 'update'
   },
   toggle: function() {
     this.model.toggle();
   },
+  update: function() {
+    this.model.updateText(this.$('.form-control').val());
+  },
+
   className: 'input-group input-group-lg',
   template: _.template($('#todo-item-template').html()),
   render: function() {
