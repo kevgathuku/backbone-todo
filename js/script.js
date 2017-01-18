@@ -42,7 +42,9 @@ window.TodosView = Backbone.View.extend({
     this.collection.on('destroy', this.render, this);
   },
   addOne: function(todoItem) {
-    var todoView = new TodoView({model: todoItem});
+    var todoView = new TodoView({
+      model: todoItem
+    });
     this.$el.append(todoView.render().el);
   },
   addAll: function() {
@@ -59,29 +61,70 @@ window.TodosView = Backbone.View.extend({
   }
 });
 
-var TodoApp = new (Backbone.Router.extend({
-  routes: {'': 'index'},
+var TodoApp = new(Backbone.Router.extend({
+  routes: {
+    '': 'index'
+  },
   initialize: function() {
     this.todoItems = new TodoItems();
-    this.todosView = new TodosView({collection: this.todoItems});
+    this.todosView = new TodosView({
+      collection: this.todoItems
+    });
     this.todosView.render();
 
+    // Global event listeners
+    // Clear completed todos
     $('.btn-clear').click(function(e) {
       window.TodoApp.todosView.filterCompleted();
-    })
+    });
+
+    $('.btn-success').click(function(e) {
+      window.TodoApp.todoItems.add({
+        val: $('#newTodo').val(),
+        completed: false
+      });
+      // Reset the todo input field
+      $('#newTodo').val('');
+    });
   },
 
   index: function() {
-    var fixtures = [
-      {val: 'something', completed: true},
-      {val: 'something', completed: true},
-      {val: 'else', completed: false},
-      {val: 'there', completed: true},
-      {val: 'something', completed: true},
-      {val: 'else', completed: false},
-      {val: 'something', completed: true},
-      {val: 'there', completed: true},
-      {val: 'else', completed: false}
+    var fixtures = [{
+        val: 'something',
+        completed: true
+      },
+      {
+        val: 'something',
+        completed: true
+      },
+      {
+        val: 'else',
+        completed: false
+      },
+      {
+        val: 'there',
+        completed: true
+      },
+      {
+        val: 'something',
+        completed: true
+      },
+      {
+        val: 'else',
+        completed: false
+      },
+      {
+        val: 'other thing',
+        completed: true
+      },
+      {
+        val: 'there',
+        completed: true
+      },
+      {
+        val: 'else',
+        completed: false
+      }
     ];
     $('#app').html(this.todosView.el);
     // replace a collection with a new list of models
