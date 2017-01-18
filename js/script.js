@@ -1,6 +1,12 @@
 window.TodoItem = Backbone.Model.extend({});
 window.TodoItems = Backbone.Collection.extend({
-  model: TodoItem
+  model: TodoItem,
+  filterCompleted: function() {
+    this.remove(this.filter(function(item) {
+      //return items where completed is `true`
+      return item.get('completed');
+    }))
+  }
 });
 
 window.TodoView = Backbone.View.extend({
@@ -27,6 +33,10 @@ window.TodosView = Backbone.View.extend({
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
   },
+  filterCompleted: function() {
+    this.collection.filterCompleted();
+    this.render();
+  },
   render: function() {
     this.addAll();
     return this;
@@ -39,6 +49,10 @@ var TodoApp = new (Backbone.Router.extend({
     this.todoItems = new TodoItems();
     this.todosView = new TodosView({collection: this.todoItems});
     this.todosView.render();
+
+    $('.btn-clear').click(function(e) {
+      window.TodoApp.todosView.filterCompleted();
+    })
   },
 
   index: function() {
